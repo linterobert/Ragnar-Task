@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="../RagnarApp-Backend/RagnarApp.API/RagnarApp.API.csproj" />
+  <Project Path="../RagnarApp-Backend/RagnarApp.Application/RagnarApp.Application.csproj" />
+  <Project Path="../RagnarApp-Backend/RagnarApp.Domain/RagnarApp.Domain.csproj" />
+  <Project Path="../RagnarApp-Backend/RagnarApp.Infrastructure/RagnarApp.Infrastructure.csproj" />
+  <Project Path="RagnarAppWorker/RagnarAppWorker.csproj" />
+</Solution>

@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="RagnarApp.API/RagnarApp.API.csproj" />
+  <Project Path="RagnarApp.Application/RagnarApp.Application.csproj" />
+  <Project Path="RagnarApp.Domain/RagnarApp.Domain.csproj" />
+  <Project Path="RagnarApp.Infrastructure/RagnarApp.Infrastructure.csproj" />
+  <Project Path="RagnarApp.UnitTest/RagnarApp.UnitTest.csproj" Id="10933eae-d78c-45e0-a416-c70f8081411f" />
+</Solution>

@@ -1,3 +1,13 @@
+# Update Info
+
+I decided to slightly change the structure of the Library table, so I changed the Genre field from a string to an enum and added all the genre types found in the two test files.
+
+I also added two tests for the import request.
+
+For the backend, I chose Clean Architecture, as it makes the code easier to understand and maintain.
+
+On the frontend side, I improved the file upload experience by making the file input more responsive. I added custom validation error messages and enhanced the drag-and-drop area with a scaling animation when a file is dropped.
+
 # Home Library - Take-Home Assignment
 
 Welcome! **Fork this repository** and build your solution in your fork. This starter gives you the
@@ -21,19 +31,13 @@ on the app rather than the plumbing.
 ## Quick start
 
 ```bash
-# 1. copy the env defaults
-cp .env.example .env
-
-# 2. bring up the infrastructure
-docker compose up -d
+docker compose up -d --build
 ```
 
+- Web app → http://localhost:4200
+- API → http://localhost:8080
 - RabbitMQ management UI → http://localhost:15672 &nbsp;(`guest` / `guest`)
 - PostgreSQL → `localhost:5432` &nbsp;(`library` / `library`, database `library`)
-
-Build your API, worker, and Angular app. Once they're containerised, **edit the `api` /
-`worker` / `web` templates** in `docker-compose.yml` so that a single **`docker compose up -d --build`**
-brings up the whole application.
 
 ---
 

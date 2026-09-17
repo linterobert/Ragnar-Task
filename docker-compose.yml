@@ -33,37 +33,57 @@ services:
       timeout: 5s
       retries: 10
 
-  # ------------------------------------
-  # YOUR SERVICES — uncomment and adjust
-  # -------------------------------------
+  api:
+    build:
+      context: .
+      dockerfile: RagnarApp-Backend/RagnarApp.API/Dockerfile
+    container_name: home-library-api
+    environment:
+      ASPNETCORE_URLS: http://+:8080
+      ConnectionStrings__Library: "Host=postgres;Port=5432;Database=${POSTGRES_DB:-library};Username=${POSTGRES_USER:-library};Password=${POSTGRES_PASSWORD:-library}"
+      RabbitMq__HostName: rabbitmq
+      RabbitMq__UserName: ${RABBITMQ_USER:-guest}
+      RabbitMq__Password: ${RABBITMQ_PASSWORD:-guest}
+    ports:
+      - "${API_PORT:-8080}:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:8080/health"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
 
-  # api:
-  #   build:
-  #     context: ./src/Api
-  #   environment:
-  #     ConnectionStrings__Library: "Host=postgres;Port=5432;Database=${POSTGRES_DB:-library};Username=${POSTGRES_USER:-library};Password=${POSTGRES_PASSWORD:-library}"
-  #     RabbitMq__HostName: rabbitmq
-  #     RabbitMq__UserName: ${RABBITMQ_USER:-guest}
-  #     RabbitMq__Password: ${RABBITMQ_PASSWORD:-guest}
-  #   ports:
-  #     - "8080:8080"
+  worker:
+    build:
+      context: .
+      dockerfile: RagnarAppWorker/RagnarAppWorker/Dockerfile
+    container_name: home-library-worker
+    environment:
+      ConnectionStrings__Library: "Host=postgres;Port=5432;Database=${POSTGRES_DB:-library};Username=${POSTGRES_USER:-library};Password=${POSTGRES_PASSWORD:-library}"
+      RabbitMq__HostName: rabbitmq
+      RabbitMq__UserName: ${RABBITMQ_USER:-guest}
+      RabbitMq__Password: ${RABBITMQ_PASSWORD:-guest}
+    depends_on:
+      api:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
 
-  # worker:
-  #   build:
-  #     context: ./src/Worker
-  #   environment:
-  #     ConnectionStrings__Library: "Host=postgres;Port=5432;Database=${POSTGRES_DB:-library};Username=${POSTGRES_USER:-library};Password=${POSTGRES_PASSWORD:-library}"
-  #     RabbitMq__HostName: rabbitmq
-  #     RabbitMq__UserName: ${RABBITMQ_USER:-guest}
-  #     RabbitMq__Password: ${RABBITMQ_PASSWORD:-guest}
-
-  # web:
-  #   build:
-  #     context: ./src/web         
-  #   ports:
-  #     - "4200:80"
-  #   depends_on:
-  #     - api
+  web:
+    build:
+      context: ./RagnarApp-Frontend
+      dockerfile: Dockerfile
+    container_name: home-library-web
+    ports:
+      - "${WEB_PORT:-4200}:80"
+    depends_on:
+      api:
+        condition: service_healthy
 
 volumes:
   postgres-data:

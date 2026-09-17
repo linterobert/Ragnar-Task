@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>dotnet-RagnarAppWorker-b74864ef-b23b-4cee-a628-87c00cc1a3b5</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.12" />
+    <PackageReference Include="RabbitMQ.Client" Version="7.2.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\RagnarApp-Backend\RagnarApp.Application\RagnarApp.Application.csproj" />
+    <ProjectReference Include="..\..\RagnarApp-Backend\RagnarApp.Domain\RagnarApp.Domain.csproj" />
+    <ProjectReference Include="..\..\RagnarApp-Backend\RagnarApp.Infrastructure\RagnarApp.Infrastructure.csproj" />
+  </ItemGroup>
+</Project>
